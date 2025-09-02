@@ -1,0 +1,12 @@
+{
+  "claim": "string",
+  "subject": "string",
+  "synecdoches": [
+    {
+      "original_text": "string",
+      "alternative": "string",
+      "alternative_reasoning": "string",
+      "alternative_reasoning_summary": "string"
+    }
+  ]
+}

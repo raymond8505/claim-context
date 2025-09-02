@@ -1,0 +1,6 @@
+{
+  "title": "string",
+  "body": "string",
+  "dateCreated": "number",
+  "dataLastModified": "number"
+}

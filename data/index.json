@@ -1,0 +1,133 @@
+{
+  "subjects": [],
+  "sources": [],
+  "claims": [],
+  "scraper_rules": {
+    "profiles": {
+      "prism": {
+        "include": "[data-testid='prism-article-body'] > p",
+        "exclude": "[data-testid='prism-article-body'] > p:last-child"
+      }
+    },
+    "sites": {
+      "people.com": {
+        "include": ".article-content > .structured-content > p",
+        "exclude": ".article-content > .structured-content > p:last-child"
+      },
+      "www.wfmz.com": {
+        "include": "#article-body > p"
+      },
+      "abcnews.go.com": { "profile": "prism" },
+      "www.wataugademocrat.com": {
+        "include": "#article-body > div > p",
+        "exclude": ".inline-asset"
+      },
+      "www.cnn.com": {
+        "include": "main .article__content > p"
+      },
+      "www.goodmorningamerica.com": { "profile": "prism" },
+      "www.abcactionnews.com": {
+        "include": "[itemprop='articleBody'] > .RichTextArticleBody > .RichTextArticleBody-body > p"
+      },
+      "studyfinds.org": {
+        "include": "main > article > div > p, div:has(> #h-paper-summary)"
+      },
+      "www.newsweek.com": {
+        "include": "main .article-real-content > p"
+      },
+      "www.news-medical.net": {
+        "include": "#main > .item-body.content-item-body > div.content > [itemprop='articleBody'] > p"
+      },
+      "www.kten.com": {
+        "include": "#article-body > div > p",
+        "exclude": ".inline-asset",
+        "title": "h1[itemprop='headline']"
+      },
+      "www.standard.co.uk": {
+        "include": "h1 + div,#main p",
+        "exclude": "[data-read-more-type='internal'] p"
+      },
+      "www.washingtonexaminer.com": {
+        "include": ".td-post-content p"
+      },
+      "mynorthwest.com": {
+        "include": ".story_body p"
+      },
+      "www.thebulwark.com": {
+        "include": ".available-content p"
+      },
+      "www.nj.com": {
+        "include": ".article__story .article__paragraph",
+        "exclude": ".article__story .article__paragraph:last-of-type"
+      },
+      "www.winnipegfreepress.com": {
+        "include": ".storycontent .story p"
+      },
+      "www.sun-sentinel.com": {
+        "include": ".body-copy p, .body-copy h4"
+      },
+      "politicalwire.com": {
+        "include": ".entry-content p"
+      },
+      "thehill.com": {
+        "include": ".article__text p"
+      },
+      "www.seattletimes.com": {
+        "include": ".article-body p"
+      },
+      "apnews.com": {
+        "include": "main .RichTextBody p, main .RichTextBody h2"
+      },
+      "www.livescience.com": {
+        "include": "#article-body > p"
+      },
+      "time.com": {
+        "include": "#article-body  p"
+      },
+      "www.straitstimes.com": {
+        "include": ".article-content > p",
+        "exclude": ".campaign-paragraph"
+      },
+      "www.rnz.co.nz": {
+        "include": ".article__body > p"
+      },
+      "www.stuff.co.nz": {
+        "include": ".content-item"
+      },
+      "www.nzherald.co.nz": {
+        "include": ".article__body p",
+        "exclude": ".article__body :nth-last-child(1),.article__body :nth-last-child(2)"
+      },
+      "jamanetwork.com": {
+        "include": ".article-body p"
+      },
+      "www.sciencedaily.com": {
+        "include": "#first.lead, #text p"
+      },
+      "www.slashgear.com": {
+        "include": ".news-post .news-article p"
+      },
+      "www.wired.com": {
+        "include": ".main-content p",
+        "exclude": "figure p",
+        "title": "h1[data-testid='ContentHeaderHed']"
+      },
+      "www.livemint.com": {
+        "include": "[data-vars-orderid='1'] .storyBoxSchema:first-child .storyParagraph"
+      },
+      "gizmodo.com": {
+        "include": ".entry-content p"
+      },
+      "www.popsci.com": {
+        "include": ".article-paragraph"
+      },
+      "www.fastcompany.com": {
+        "include": ".article-container p"
+      },
+      "techxplore.com": {
+        "include": ".article-main p",
+        "exclude": ".article-main__more p"
+      }
+    }
+  }
+}
