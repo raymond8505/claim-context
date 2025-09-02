@@ -1,11 +1,11 @@
 import { Layout, Menu } from "antd";
 import schema from "../schema";
+import * as z from "zod";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
-  console.log(schema);
+  console.log(z.globalRegistry);
   return (
     <Layout style={{ height: "100vh" }}>
-      <Layout.Header>header</Layout.Header>
       <Layout>
         <Layout.Sider
           style={{
@@ -15,8 +15,8 @@ function App() {
           <Menu
             items={schema.map((type) => {
               return {
-                key: type.meta()?.label,
-                label: type.meta()?.label,
+                key: type.meta()?.label as string,
+                label: type.meta()?.label as string,
                 onClick: () => {
                   location.href = `/${type
                     .meta()

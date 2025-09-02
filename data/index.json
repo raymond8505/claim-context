@@ -6,7 +6,7 @@
     "profiles": {
       "prism": {
         "include": "[data-testid='prism-article-body'] > p",
-        "exclude": "[data-testid='prism-article-body'] > p:last-child"
+        "excluded": "[data-testid='prism-article-body'] > p:last-child"
       }
     },
     "sites": {

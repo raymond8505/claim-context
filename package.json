@@ -1,17 +1,74 @@
 {
   "name": "claim-context",
   "engines": {
-    "node": ">=21.0.0"
+    "node": ">=22.12"
   },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "server:data": "json-server -p 3001 ./data/index.json"
+    "server:data": "json-server -p 3001 ./data/index.json",
+    "client:dev": "cd ./client && vite",
+    "build": "cd ./client && tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "server:app:dev": "nodemon --watch server --ext ts --exec 'npx vite-node server/app/index.ts'"
   },
   "author": "",
   "license": "ISC",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": [
+    "./client/src",
+    "./data/cms/src"
+  ],
   "dependencies": {
-    "json-server": "^1.0.0-beta.3"
+    "@types/express": "^5.0.3",
+    "antd": "^5.27.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "json-server": "^1.0.0-beta.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2",
+    "vite": "^7.1.4",
+    "vite-node": "^3.2.4",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react-swc": "^4.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1"
   }
 }
