@@ -10,7 +10,7 @@ export function Editor({ typeSlug }: { typeSlug: string }) {
   return type?.shape ? (
     <Form>
       {Object.entries(type.shape).map(([fieldSlug, field]) => {
-        console.log({ fieldSlug, field });
+        console.log({ fieldSlug, field, id });
 
         return null;
       })}
