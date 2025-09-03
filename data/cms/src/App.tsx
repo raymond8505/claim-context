@@ -2,6 +2,8 @@ import { Layout, Menu } from "antd";
 import schema from "../schema";
 import * as z from "zod";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Archive } from "./Archive";
+import { Editor } from "./Editor";
 function App() {
   console.log(z.globalRegistry);
   return (
@@ -31,16 +33,20 @@ function App() {
           <BrowserRouter>
             <Routes>
               {schema.map((type) => {
-                return (
-                  <Route
-                    path={type.meta()?.label?.toString().toLowerCase()}
-                    element={
-                      <strong>
-                        {type.meta()?.label?.toString().toLowerCase()}
-                      </strong>
-                    }
-                  />
-                );
+                const typeLabel = type.meta()?.label?.toString().toLowerCase();
+
+                return typeLabel ? (
+                  <>
+                    <Route
+                      path={typeLabel}
+                      element={<Archive type={typeLabel} />}
+                    />
+                    <Route
+                      path={`${typeLabel}/:id`}
+                      element={<Editor typeSlug={typeLabel} />}
+                    />
+                  </>
+                ) : null;
               })}
             </Routes>
           </BrowserRouter>

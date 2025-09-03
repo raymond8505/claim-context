@@ -10,6 +10,7 @@
   "scripts": {
     "server:data": "json-server -p 3001 ./data/index.json",
     "client:dev": "cd ./client && vite",
+    "cms:client:dev": "cd ./data/cms && vite",
     "build": "cd ./client && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
