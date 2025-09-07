@@ -17,7 +17,13 @@ export const Subject = z
           displayField: "title",
         },
       }),
+    dateCreated: z.date().describe("Source Created"),
+    dateLastModified: z.date().describe("Source Last Modified"),
   })
   .meta({
-    label: "Subjects",
+    label: {
+      singular: "Subject",
+      plural: "Subjects",
+    },
+    labelField: "title",
   });

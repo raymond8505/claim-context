@@ -17,12 +17,13 @@ function App() {
           <Menu
             items={schema.map((type) => {
               return {
-                key: type.meta()?.label as string,
-                label: type.meta()?.label as string,
+                key: type.meta()?.label?.plural as string,
+                label: type.meta()?.label?.plural as string,
+                extra: "+",
                 onClick: () => {
                   location.href = `/${type
                     .meta()
-                    ?.label?.toString()
+                    ?.label?.plural.toString()
                     .toLowerCase()}`;
                 },
               };
@@ -33,13 +34,16 @@ function App() {
           <BrowserRouter>
             <Routes>
               {schema.map((type) => {
-                const typeLabel = type.meta()?.label?.toString().toLowerCase();
+                const typeLabel = type
+                  .meta()
+                  ?.label?.plural.toString()
+                  .toLowerCase();
 
                 return typeLabel ? (
                   <>
                     <Route
                       path={typeLabel}
-                      element={<Archive type={typeLabel} />}
+                      element={<Archive typeSlug={typeLabel} />}
                     />
                     <Route
                       path={`${typeLabel}/:id`}
