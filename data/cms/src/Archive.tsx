@@ -2,6 +2,7 @@ import { Button, Layout } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
 import { getTypeBySlug } from "../schema/helpers";
+import { TypeMeta } from "../schema/types";
 
 export function Archive({ typeSlug }: { typeSlug: string }) {
   const navigate = useNavigate();
@@ -20,12 +21,12 @@ export function Archive({ typeSlug }: { typeSlug: string }) {
             textTransform: "capitalize",
           }}
         >
-          {type?.meta().label?.plural}
+          {(type?.meta() as TypeMeta).label?.plural}
         </h1>
         <Button
           type="primary"
           onClick={() => {
-            navigate(`/${type?.meta().label?.plural}/new`);
+            navigate(`/${(type?.meta() as TypeMeta).label?.plural}/new`);
           }}
         >
           Create

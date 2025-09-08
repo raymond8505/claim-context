@@ -4,6 +4,7 @@ import * as z from "zod";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Archive } from "./Archive";
 import { Editor } from "./Editor";
+import { TypeMeta } from "../schema/types";
 function App() {
   console.log(z.globalRegistry);
   return (
@@ -17,14 +18,13 @@ function App() {
           <Menu
             items={schema.map((type) => {
               return {
-                key: type.meta()?.label?.plural as string,
-                label: type.meta()?.label?.plural as string,
+                key: (type?.meta() as TypeMeta)?.label?.plural ?? "",
+                label: (type?.meta() as TypeMeta)?.label?.plural ?? "",
                 extra: "+",
                 onClick: () => {
-                  location.href = `/${type
-                    .meta()
-                    ?.label?.plural.toString()
-                    .toLowerCase()}`;
+                  location.href = `/${(
+                    type?.meta() as TypeMeta
+                  )?.label?.plural?.toLowerCase()}`;
                 },
               };
             })}
@@ -34,10 +34,9 @@ function App() {
           <BrowserRouter>
             <Routes>
               {schema.map((type) => {
-                const typeLabel = type
-                  .meta()
-                  ?.label?.plural.toString()
-                  .toLowerCase();
+                const typeLabel = (
+                  type?.meta() as TypeMeta
+                )?.label?.plural?.toLowerCase();
 
                 return typeLabel ? (
                   <>

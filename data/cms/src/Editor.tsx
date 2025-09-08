@@ -2,7 +2,9 @@ import { useParams } from "react-router-dom";
 import { getTypeBySlug } from "../schema/helpers";
 import { Button, Form, Layout } from "antd";
 import { Header } from "antd/es/layout/layout";
-
+import { ZodObject } from "zod";
+import { FormField } from "./FormField";
+import { TypeMeta } from "../schema/types";
 export function Editor({ typeSlug }: { typeSlug: string }) {
   const { id } = useParams();
   const type = getTypeBySlug(typeSlug);
@@ -15,6 +17,7 @@ export function Editor({ typeSlug }: { typeSlug: string }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          marginTop: "1em",
         }}
       >
         <h1
@@ -22,7 +25,9 @@ export function Editor({ typeSlug }: { typeSlug: string }) {
             textTransform: "capitalize",
           }}
         >
-          {id === "new" ? `New ${typeSlug}` : id}
+          {id === "new"
+            ? `New ${(type.meta() as TypeMeta)?.label?.singular}`
+            : id}
         </h1>
       </Header>
       <Form>
@@ -35,7 +40,7 @@ export function Editor({ typeSlug }: { typeSlug: string }) {
               key={fieldSlug}
               hidden={field.meta().hidden}
             >
-              d
+              <FormField field={field as ZodObject} fieldSlug={fieldSlug} />
             </Form.Item>
           );
         })}

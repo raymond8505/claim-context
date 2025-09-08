@@ -1,24 +1,43 @@
 import * as z from "zod";
 import { Source } from "./Source";
+import { FieldMeta, TypeMeta } from "./types";
 
 export const Subject = z
   .object({
-    id: z.string().describe("Unique ID").meta({ hidden: true }),
-    title: z.string().describe("Short description of the subject"),
-    summary: z
-      .string()
-      .describe("AI Generated summary of the subject based on its sources"),
-    sources: z
-      .array(z.string())
-      .describe("Sources describing this subject")
+    id: z.string().meta({
+      hidden: true,
+      description: "Unique ID",
+      label: "ID",
+    } as FieldMeta),
+    title: z.string().meta({
+      description: "Short description of the subject",
+      label: "Title",
+    } as FieldMeta),
+    summary: z.string().meta({
+      description: "AI Generated summary of the subject based on its sources",
+      label: "Summary",
+      multiline: true,
+    } as FieldMeta),
+    sources: z.array(Source).meta({
+      description: "Sources describing this subject",
+      label: "Sources",
+      relationship: {
+        type: Source,
+        displayField: "title",
+      },
+    } as FieldMeta),
+    dateCreated: z.date().meta({
+      description: "Source Created",
+      readonly: true,
+      label: "Created",
+    } as FieldMeta),
+    dateLastModified: z
+      .date()
       .meta({
-        relationship: {
-          type: typeof Source,
-          displayField: "title",
-        },
-      }),
-    dateCreated: z.date().describe("Source Created"),
-    dateLastModified: z.date().describe("Source Last Modified"),
+        description: "Source Last Modified",
+        readonly: true,
+        label: "Last Modified",
+      } as FieldMeta),
   })
   .meta({
     label: {
@@ -26,4 +45,4 @@ export const Subject = z
       plural: "Subjects",
     },
     labelField: "title",
-  });
+  } as TypeMeta);
