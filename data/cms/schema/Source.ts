@@ -15,12 +15,15 @@ export const Source = z
       description: "Source Body",
       label: "Body",
       multiline: true,
+      archive: {
+        hidden: true,
+      },
     } as FieldMeta),
     // dateCreated: z.date().meta({
     //   description: "Source Created",
     //   readOnly: true,
     //   label: "Created",
-    //   hidden: true,
+    //   editor: { hidden: true},
     // } as FieldMeta),
     // dateLastModified: z.date().meta({
     //   description: "Source Last Modified",

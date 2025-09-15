@@ -1,11 +1,15 @@
-import { Button, Layout } from "antd";
+import { Button, Layout, Table } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
 import { getTypeBySlug } from "../schema/helpers";
-import { TypeMeta } from "../schema/types";
+import { FieldMeta, TypeMeta } from "../schema/types";
+import { useREST } from "./hooks/useREST";
+import { ColumnType } from "antd/es/table";
 
 export function Archive({ typeSlug }: { typeSlug?: string }) {
   const navigate = useNavigate();
+  const { items } = useREST(typeSlug);
+
   if (!typeSlug) return null;
 
   const type = getTypeBySlug(typeSlug);
@@ -34,6 +38,26 @@ export function Archive({ typeSlug }: { typeSlug?: string }) {
           Create
         </Button>
       </Header>
+      <Table
+        dataSource={items?.map((item) => {
+          return {
+            key: item.id,
+            ...item,
+          };
+        })}
+        columns={Object.entries(type?.shape ?? {})
+          .filter(([_, field]) => {
+            return !(field.meta() as FieldMeta)?.archive?.hidden;
+          })
+          .map(([fieldSlug, field]) => {
+            console.log(type?.shape);
+            return {
+              dataIndex: fieldSlug,
+              key: fieldSlug,
+              title: field.meta().label,
+            } as ColumnType<{ id: string; key: string }>;
+          })}
+      />
     </Layout>
   );
 }

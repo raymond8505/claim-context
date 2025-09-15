@@ -10,6 +10,9 @@ export interface FieldMeta extends GlobalMeta {
     type: ZodType;
     displayField: string;
   };
+  archive: {
+    hidden: boolean;
+  };
 }
 
 export interface TypeMeta extends GlobalMeta {
