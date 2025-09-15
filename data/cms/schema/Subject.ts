@@ -4,11 +4,14 @@ import { FieldMeta, TypeMeta } from "./types";
 
 export const Subject = z
   .object({
-    id: z.string().meta({
-      hidden: true,
-      description: "Unique ID",
-      label: "ID",
-    } as FieldMeta),
+    id: z
+      .string()
+      .optional()
+      .meta({
+        hidden: true,
+        description: "Unique ID",
+        label: "ID",
+      } as FieldMeta),
     title: z.string().meta({
       description: "Short description of the subject",
       label: "Title",
@@ -21,28 +24,23 @@ export const Subject = z
     sources: z.array(Source).meta({
       description: "Sources describing this subject",
       label: "Sources",
-      relationship: {
-        type: Source,
-        displayField: "title",
-      },
     } as FieldMeta),
-    dateCreated: z.date().meta({
-      description: "Source Created",
-      readonly: true,
-      label: "Created",
-    } as FieldMeta),
-    dateLastModified: z
-      .date()
-      .meta({
-        description: "Source Last Modified",
-        readonly: true,
-        label: "Last Modified",
-      } as FieldMeta),
+    // dateCreated: z.date().meta({
+    //   description: "Source Created",
+    //   readOnly: true,
+    //   label: "Created",
+    // } as FieldMeta),
+    // dateLastModified: z.date().meta({
+    //   description: "Source Last Modified",
+    //   readOnly: true,
+    //   label: "Last Modified",
+    // } as FieldMeta),
   })
   .meta({
     label: {
       singular: "Subject",
       plural: "Subjects",
     },
+    slug: "subjects",
     labelField: "title",
   } as TypeMeta);

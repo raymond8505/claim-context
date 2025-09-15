@@ -16,19 +16,23 @@ export const Source = z
       label: "Body",
       multiline: true,
     } as FieldMeta),
-    dateCreated: z
-      .date()
-      .meta({ description: "Source Created", readonly: true } as FieldMeta),
-    dateLastModified: z.date().meta({
-      description: "Source Last Modified",
-      readonly: true,
-      label: "Last Modified",
-    } as FieldMeta),
+    // dateCreated: z.date().meta({
+    //   description: "Source Created",
+    //   readOnly: true,
+    //   label: "Created",
+    //   hidden: true,
+    // } as FieldMeta),
+    // dateLastModified: z.date().meta({
+    //   description: "Source Last Modified",
+    //   readOnly: true,
+    //   label: "Last Modified",
+    // } as FieldMeta),
   })
   .meta({
     label: {
       plural: "Sources",
-      singlular: "Source",
+      singular: "Source",
     },
     labelField: "title",
+    slug: "sources",
   } as TypeMeta);

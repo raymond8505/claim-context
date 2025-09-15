@@ -1,15 +1,44 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getTypeBySlug } from "../schema/helpers";
-import { Button, Form, Layout } from "antd";
+import { Button, DatePicker, Form, Input, Layout } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { ZodObject } from "zod";
-import { FormField } from "./FormField";
-import { TypeMeta } from "../schema/types";
-export function Editor({ typeSlug }: { typeSlug: string }) {
-  const { id } = useParams();
-  const type = getTypeBySlug(typeSlug);
+import { FieldMeta, TypeMeta } from "../schema/types";
+import { useCallback } from "react";
+import { useREST } from "./hooks/useREST";
+import { ZodType } from "zod";
+import { ArrayField } from "./ArrayField";
 
-  console.log(type);
+export function Editor({ typeSlug }: { typeSlug?: string }) {
+  const { id } = useParams();
+  const [form] = Form.useForm();
+
+  const type = getTypeBySlug(typeSlug);
+  const { createItem, getItemById, updateItem } = useREST(typeSlug);
+
+  const navigate = useNavigate();
+
+  const item = id ? getItemById(id) : undefined;
+  const onFinish = useCallback(
+    (fields) => {
+      if (id) {
+        updateItem(fields);
+      } else {
+        createItem(fields).then((newItem) => {
+          navigate(`/${typeSlug}/${newItem.id}`);
+        });
+      }
+    },
+    [createItem, navigate, typeSlug, updateItem, id]
+  );
+
+  if (!typeSlug) return null;
+
+  if (item) {
+    Object.entries(item).forEach(([name, value]) => {
+      form.setFieldValue(name, value);
+    });
+  }
+
   return type?.shape ? (
     <Layout>
       <Header
@@ -27,26 +56,59 @@ export function Editor({ typeSlug }: { typeSlug: string }) {
         >
           {id === "new"
             ? `New ${(type.meta() as TypeMeta)?.label?.singular}`
-            : id}
+            : `Edit "${
+                item?.[(type.meta() as TypeMeta).labelField ?? "title"]
+              }"`}
         </h1>
       </Header>
-      <Form>
-        {Object.entries(type.shape).map(([fieldSlug, field]) => {
-          console.log({ fieldSlug, field, id });
+      <Form form={form} onFinish={onFinish}>
+        {Object.entries(type.shape).map(
+          ([fieldSlug, field]: [string, ZodType]) => {
+            let inputElement;
+            switch (field.type) {
+              case "date":
+                inputElement = (
+                  <DatePicker
+                    showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD HH:mm"
+                    readOnly={(field.meta() as FieldMeta).readOnly}
+                    disabled={(field.meta() as FieldMeta).readOnly}
+                  />
+                );
+                break;
+              case "array": {
+                inputElement = (
+                  <ArrayField form={form} field={field} fieldSlug={fieldSlug} />
+                );
+                break;
+              }
+              case "string":
+              default:
+                if (field.meta()?.multiline) {
+                  inputElement = <Input.TextArea style={{ height: "20em" }} />;
+                } else {
+                  inputElement = <Input />;
+                }
+                break;
+            }
 
-          return (
-            <Form.Item
-              label={field.meta().label}
-              key={fieldSlug}
-              hidden={field.meta().hidden}
-            >
-              <FormField field={field as ZodObject} fieldSlug={fieldSlug} />
-            </Form.Item>
-          );
-        })}
-        <Button type="primary" htmlType="submit">
-          {id === "new" ? "Add New" : "Edit"}
-        </Button>
+            return (
+              <Form.Item
+                label={(field.meta() as FieldMeta)?.label}
+                key={fieldSlug}
+                name={fieldSlug}
+                hidden={(field.meta() as FieldMeta)?.hidden}
+              >
+                {inputElement}
+              </Form.Item>
+            );
+          }
+        )}
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            {id === "new" ? "Add New" : "Edit"}
+          </Button>
+        </Form.Item>
       </Form>
     </Layout>
   ) : null;

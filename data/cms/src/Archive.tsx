@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { getTypeBySlug } from "../schema/helpers";
 import { TypeMeta } from "../schema/types";
 
-export function Archive({ typeSlug }: { typeSlug: string }) {
+export function Archive({ typeSlug }: { typeSlug?: string }) {
   const navigate = useNavigate();
+  if (!typeSlug) return null;
+
   const type = getTypeBySlug(typeSlug);
   return (
     <Layout>

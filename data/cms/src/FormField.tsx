@@ -11,17 +11,13 @@ export function FormField({
   switch (field.type) {
     case "date":
       return (
-        <DatePicker
-          name={fieldSlug}
-          showTime={{ format: "HH:mm" }}
-          format="YYYY-MM-DD HH:mm"
-        />
+        <DatePicker showTime={{ format: "HH:mm" }} format="YYYY-MM-DD HH:mm" />
       );
     case "string":
     default:
       if (field.meta()?.multiline) {
-        return <Input.TextArea name={fieldSlug} style={{ height: "20em" }} />;
+        return <Input.TextArea style={{ height: "20em" }} />;
       }
-      return <Input name={fieldSlug} />;
+      return <Input />;
   }
 }

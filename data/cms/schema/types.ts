@@ -5,7 +5,7 @@ export interface FieldMeta extends GlobalMeta {
   label?: string;
   multiline?: boolean;
   hidden?: boolean;
-  readonly?: boolean;
+  readOnly?: boolean;
   relationship?: {
     type: ZodType;
     displayField: string;
@@ -18,4 +18,5 @@ export interface TypeMeta extends GlobalMeta {
     plural?: string;
   };
   labelField?: string;
+  slug: string;
 }

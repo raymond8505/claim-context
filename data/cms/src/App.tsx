@@ -1,12 +1,11 @@
 import { Layout, Menu } from "antd";
 import schema from "../schema";
-import * as z from "zod";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Archive } from "./Archive";
 import { Editor } from "./Editor";
 import { TypeMeta } from "../schema/types";
 function App() {
-  console.log(z.globalRegistry);
   return (
     <Layout style={{ height: "100vh" }}>
       <Layout>
@@ -20,11 +19,8 @@ function App() {
               return {
                 key: (type?.meta() as TypeMeta)?.label?.plural ?? "",
                 label: (type?.meta() as TypeMeta)?.label?.plural ?? "",
-                extra: "+",
                 onClick: () => {
-                  location.href = `/${(
-                    type?.meta() as TypeMeta
-                  )?.label?.plural?.toLowerCase()}`;
+                  location.href = `/${(type?.meta() as TypeMeta)?.slug}`;
                 },
               };
             })}
@@ -42,11 +38,15 @@ function App() {
                   <>
                     <Route
                       path={typeLabel}
-                      element={<Archive typeSlug={typeLabel} />}
+                      element={
+                        <Archive typeSlug={(type?.meta() as TypeMeta)?.slug} />
+                      }
                     />
                     <Route
                       path={`${typeLabel}/:id`}
-                      element={<Editor typeSlug={typeLabel} />}
+                      element={
+                        <Editor typeSlug={(type?.meta() as TypeMeta)?.slug} />
+                      }
                     />
                   </>
                 ) : null;
