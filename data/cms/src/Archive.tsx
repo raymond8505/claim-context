@@ -5,14 +5,15 @@ import { getTypeBySlug } from "../schema/helpers";
 import { FieldMeta, TypeMeta } from "../schema/types";
 import { useREST } from "./hooks/useREST";
 import { ColumnType } from "antd/es/table";
-
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 export function Archive({ typeSlug }: { typeSlug?: string }) {
   const navigate = useNavigate();
-  const { items } = useREST(typeSlug);
+  const { items, deleteItem } = useREST(typeSlug);
 
   if (!typeSlug) return null;
 
   const type = getTypeBySlug(typeSlug);
+
   return (
     <Layout>
       <Header
@@ -45,18 +46,42 @@ export function Archive({ typeSlug }: { typeSlug?: string }) {
             ...item,
           };
         })}
-        columns={Object.entries(type?.shape ?? {})
-          .filter(([_, field]) => {
-            return !(field.meta() as FieldMeta)?.archive?.hidden;
-          })
-          .map(([fieldSlug, field]) => {
-            console.log(type?.shape);
-            return {
-              dataIndex: fieldSlug,
-              key: fieldSlug,
-              title: field.meta().label,
-            } as ColumnType<{ id: string; key: string }>;
-          })}
+        columns={[
+          ...Object.entries(type?.shape ?? {})
+            .filter(([, field]) => {
+              return !(field.meta() as FieldMeta)?.archive?.hidden;
+            })
+            .map(([fieldSlug, field]) => {
+              //console.log(type?.shape);
+              return {
+                dataIndex: fieldSlug,
+                key: fieldSlug,
+                title: field.meta().label,
+              } as ColumnType;
+            }),
+          {
+            title: "Actions",
+            render: (_, record) => {
+              return (
+                <>
+                  <a href={`/${typeSlug}/${record.id}`}>
+                    <EditOutlined />
+                  </a>
+                  <Button
+                    icon={<DeleteOutlined />}
+                    danger
+                    style={{ marginLeft: 8 }}
+                    onClick={() => {
+                      if (confirm(`Delete ${record.title}?`)) {
+                        deleteItem(record.id);
+                      }
+                    }}
+                  />
+                </>
+              );
+            },
+          },
+        ]}
       />
     </Layout>
   );

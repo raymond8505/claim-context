@@ -6,28 +6,10 @@
   ],
   "sources": [
     {
-      "id": "a8b5",
-      "title": "title",
-      "url": "url",
-      "body": "body"
-    },
-    {
-      "id": "606c"
-    },
-    {
-      "id": "0833"
-    },
-    {
-      "id": "20b8"
-    },
-    {
-      "id": "0c21"
-    },
-    {
       "id": "e073",
       "title": "test title updated2",
-      "url": "test url updated",
-      "body": "test body updated"
+      "url": "test url updated2",
+      "body": "test body updated2"
     }
   ],
   "claims": [],
