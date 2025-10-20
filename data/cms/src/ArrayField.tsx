@@ -23,7 +23,12 @@ export function ArrayField({
   return (
     <div>
       <ul></ul>
-      {/* <AutoComplete options={items?.map()} /> */}
+      <AutoComplete
+        options={items?.map((item) => {
+          console.log(item);
+          return { label: "", value: item.id };
+        })}
+      />
       <Button htmlType="button">Add</Button>
     </div>
   );

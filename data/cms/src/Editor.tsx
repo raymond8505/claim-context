@@ -8,18 +8,25 @@ import { useREST } from "./hooks/useREST";
 import { ZodType } from "zod";
 import { ArrayField } from "./ArrayField";
 
+/**
+ *
+ * @param param0
+ * @returns
+ */
 export function Editor({ typeSlug }: { typeSlug?: string }) {
   const { id } = useParams();
   const [form] = Form.useForm();
 
   const type = getTypeBySlug(typeSlug);
-  const { createItem, getItemById, updateItem } = useREST(typeSlug);
+  const { createItem, getItemById, updateItem } = useREST<
+    Record<string, unknown> & { id: string }
+  >(typeSlug);
 
   const navigate = useNavigate();
 
-  const item = id ? getItemById(id) : undefined;
+  const item = (id ? getItemById(id) : undefined) as Record<string, unknown>;
   const onFinish = useCallback(
-    (fields) => {
+    (fields: Record<string, unknown> & { id: string }) => {
       if (id) {
         updateItem(fields);
       } else {
